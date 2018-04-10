@@ -3,10 +3,19 @@
 
 <head>
     <title>Scale Test</title>
+    <style>
+      .axis path {
+        stroke: none;
+      }
+      .axis .tick line {
+        stroke-width: 1px;
+      }
+    </style>
 </head>
 
 <body>
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    <!--<script src="//unpkg.com/d3@5.0.0/dist/d3.min.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
     <script type="text/javascript">
@@ -40,8 +49,9 @@
 
             // Defining the Scale
             var scale = d3.scaleTime()
-                .domain([new Date(2017, 0, 20, 18, 5), new Date(2017, 0, 20, 19, 40)])
+                .domain([new Date(2017, 0, 20, 18, 0), new Date(2017, 0, 20, 20, 0)])
                 .range([0, 5000]);
+
 /*
             var circleScale = d3.scaleTime()
                 .domain([new Date(2017, 0, 20, 18, 0), new Date(2017, 0, 20, 20, 0)])
@@ -63,6 +73,13 @@
                 .append("svg")
                 .attr("width", 15000)
                 .attr("height", 610);
+
+            var xAxis = d3.axisBottom(scale)
+                .ticks(15)
+                .tickSize(15);
+            svg.append('g').call(xAxis)
+                .attr('transform', 'translate(0, 305)')
+                .attr('class', 'axis');
 
 
             //------------------------------
@@ -116,27 +133,37 @@
             //------------------------------
 
             // Add mouse wheel event listener
-            /*var domSvg = window.document.querySelector("svg");
+            var domSvg = window.document.querySelector("svg");
             domSvg.addEventListener("wheel", function(ev) {
                 var currentScale = scale.range()[1];
-                scale.range([0, currentScale + (ev.deltaY * 7)]);
+                if (scale.range()[1] >= 1000) {
+                    scale.range([0, currentScale + (ev.deltaY * 5)]);
+                } else if (scale.range()[1] < 1000) {
+                    scale.range([0, 1000]);
+                }
                 svg.selectAll("circle")
+                    .transition()
                     .attr("cx", function(d, i) {
                         return scale(Date.parse(d[3]));
                     });
                 svg.selectAll("text")
+                    .transition()
                     .attr("transform", function(d, i) {
                         return "translate(" + scale(Date.parse(d[3])) + ", 300), rotate(-45)";
                     });
                 svg.selectAll("rect")
+                    .transition()
                     .attr("x", function(d, i) {
                         return scale(Date.parse(d[0]));
-                    });*/
+                    });
+                xAxis.scale(scale);
+                svg.select('g').transition().call(xAxis);
                 /*.attr("transform", function(d) {
                     return "translate(10, " + 305 + "), rotate(180)";
                 });*/
-                /*ev.preventDefault();
-            });*/
+
+                ev.preventDefault();
+            });
 
             // Add dots
             svg.selectAll("circle")
