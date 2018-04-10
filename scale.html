@@ -20,7 +20,7 @@
                 d[3] = dates[0] + "-" + dates[1] + "-" + dates[2] + "T" + times[0] + "+09:00";
                 //console.log(d[3]);
             });
-
+/*
             var summedByMinutes = _.chain(data).groupBy(function(d) {
                 var dDate = new Date(d[3]);
                 var mDate = moment(dDate);
@@ -35,29 +35,29 @@
                 tmpDate.milliseconds(0);
                 return [tmpDate.toDate(), d.length];
             }).value();
-
+*/
             //console.log(summedByMinutes);
 
             // Defining the Scale
             var scale = d3.scaleTime()
                 .domain([new Date(2017, 0, 20, 18, 5), new Date(2017, 0, 20, 19, 40)])
                 .range([0, 5000]);
-
+/*
             var circleScale = d3.scaleTime()
                 .domain([new Date(2017, 0, 20, 18, 0), new Date(2017, 0, 20, 20, 0)])
                 .range([0, 2*Math.PI*(moment(new Date(2017, 0, 20, 20, 0)).diff(new Date(2017, 0, 20, 18, 0), 'minutes')/60)]);
-
+*/
             //console.log(moment(new Date(2017, 0, 20, 19, 40)).diff(new Date(2017, 0, 20, 18, 5), 'minutes'));
 
             var yScale = d3.scaleLinear()
                 .domain([0, 100])
                 .range([0, 350]);
-
+/*
             var colorScale = d3.scaleLinear()
                 .domain([1,100])
                 .interpolate(d3.interpolateHcl)
                 .range([d3.rgb("#007AFF"), d3.rgb('#FFF500')]);
-
+*/
             // Append SVG element
             var svg = d3.select("body")
                 .append("svg")
@@ -66,7 +66,7 @@
 
 
             //------------------------------
-
+/*
             var svg_2 = d3.select("body")
                 .append("svg")
                 .attr("width", 1000)
@@ -93,7 +93,7 @@
                 .attr("width", 12)
                 .attr("height", function(d) {
                     return yScale(d[1]);
-                })
+                })*/
                 /*.attr("x", function(d, i) {
                     return 300+150*Math.sin(circleScale(new Date(d[0])));
                 })
@@ -103,7 +103,7 @@
                 .attr("transform-origin", function(d, i) {
                     return "10px 10px";
                 })*/
-                .attr("transform", function(d, i) {
+  /*              .attr("transform", function(d, i) {
                     return "translate(" + Math.floor(500+(100+32*circleScale(new Date(d[0])))*Math.sin(circleScale(new Date(d[0]))))
                                         + ", " + Math.floor(500-(100+32*circleScale(new Date(d[0])))*Math.cos(circleScale(new Date(d[0]))))
                                         + ") rotate(" + (360/(2*Math.PI)*(circleScale(new Date(d[0]))+Math.PI)-0) + ")";
@@ -111,12 +111,12 @@
                 .attr("fill", function(d) {
                     return colorScale(d[1]);
                 })
-                ;
+                ;*/
 
             //------------------------------
 
             // Add mouse wheel event listener
-            var domSvg = window.document.querySelector("svg");
+            /*var domSvg = window.document.querySelector("svg");
             domSvg.addEventListener("wheel", function(ev) {
                 var currentScale = scale.range()[1];
                 scale.range([0, currentScale + (ev.deltaY * 7)]);
@@ -131,12 +131,12 @@
                 svg.selectAll("rect")
                     .attr("x", function(d, i) {
                         return scale(Date.parse(d[0]));
-                    });
+                    });*/
                 /*.attr("transform", function(d) {
                     return "translate(10, " + 305 + "), rotate(180)";
                 });*/
-                ev.preventDefault();
-            });
+                /*ev.preventDefault();
+            });*/
 
             // Add dots
             svg.selectAll("circle")
@@ -153,8 +153,7 @@
                 .attr("r", 1);
 
             // Setting up comment texts
-
-            svg.selectAll("text")
+            /*svg.selectAll("text")
                 .data(data)
                 .enter()
                 .append("text")
@@ -180,9 +179,9 @@
                         .attr("font-size", "10px")
                         .attr("fill", "#dddddd")
                         .attr("font-weight", "normal");
-                });
+                });*/
 
-            svg.selectAll("rect")
+            /*svg.selectAll("rect")
                 .data(summedByMinutes)
                 .enter()
                 .append("rect")
@@ -196,11 +195,11 @@
                 .attr("y", 0)
                 .attr("transform", function(d) {
                     return "translate(10, " + 305 + ")";
-                })
-                .attr("fill", function(d) {
+                })*/
+                /*.attr("fill", function(d) {
                     return colorScale(d[1]);
                 })
-                ;
+                ;*/
             //.attr("fill", "#ff0000");
 
         });
