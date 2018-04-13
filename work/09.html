@@ -2,7 +2,7 @@
 <html lang="jp">
 <head>
 <meta charset="utf-8" />
-<title>2017年熱中症発生数</title>
+<title>2017年国別コーヒー生産量</title>
 <style>
 html, body, svg {
 	width: 100%;
@@ -25,18 +25,10 @@ text {
 
 <script src="//unpkg.com/d3@5.0.0/dist/d3.min.js"></script>
 <script>
-  //熱中症データの読み込み
+
 d3.csv("data/worlds_coffee_production.csv").then(main);
 
 function main(data) {
-
-	//文字データを数値に変換
-/*
-	data.forEach(function(d){
-		d['指標値(単位:人/10万人)'] = +d['指標値(単位:人/10万人)'] * 100000;
-	});
-*/
-
 
 	var svg = d3.select('svg');
 	var w =  svg.node().clientWidth;
@@ -56,7 +48,7 @@ function main(data) {
 	var dmax =  d3.max(data.map(function(d) { return d['2017']; }))
 
 	//0〜データの最大値までを、0〜半径の大きさに正規化
-	var rScale = d3.scaleSqrt().domain([0, dmax]).range([0, (radius-margin)]);
+	var rScale = d3.scaleSqrt().domain([0, dmax]).range([0, (radius/1.5-margin)]);
 
 	render(data)
 
